@@ -10,11 +10,13 @@ export default new Vuex.Store({
     state: {
         menu_hidden: true,
         mobile_menu_hidden: true,
-        studies: []
+        studies: [],
+        enrollments: []
     },
     getters: {
         menu_hidden: (state) => state.menu_hidden,
-        studies: (state) => state.studies
+        studies: (state) => state.studies,
+        enrollments: (state) => state.enrollments
     },
     mutations: {
         updateStudies(state, studies) {

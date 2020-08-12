@@ -17,9 +17,21 @@
                                 My Studies
                             </h2>
                         </div>
-                        List the studies here...
-                        {{ $store.getters.studies[0] }}
                     </section>
+                    <div v-for="item in $store.getters.studies" :key="item.created_at" class="relative">
+                        <div class="flex mb-2">
+                          <div v-if="$store.getters.enrollments[item.id]">
+                            {{ item.title }}
+                            Enrolled
+                            <button>Leave study</button>
+                          </div>
+                          <div v-else>
+                            {{ item.title }}
+                            Not Enrolled
+                            <button>Join Study</button>
+                          </div>
+                        </div>
+                    </div>
                 </div>
                 </div>
             </div>
