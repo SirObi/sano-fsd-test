@@ -18,6 +18,7 @@
                             </h2>
                         </div>
                         List the studies here...
+                        {{ $store.getters.studies[0] }}
                     </section>
                 </div>
                 </div>
@@ -36,6 +37,9 @@ export default {
     name: "Research",
     components: {
         LoggedinSidebarTemplate,
+    },
+    created() {
+      this.$store.dispatch('loadStudies');
     },
 };
 </script>
