@@ -32,8 +32,3 @@ def get_studies():
         response = jsonify(studies)
         response.status_code = 200
         return response
-
-
-# -------
-# Write you endpoint to retrieve all available studies here.
-# -------

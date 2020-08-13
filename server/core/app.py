@@ -42,6 +42,7 @@ CORS(app, supports_credentials=True)
 
 
 app.register_blueprint(auth_api)
+app.register_blueprint(user_api)
 app.register_blueprint(public_api)
 
 
@@ -66,6 +67,10 @@ def hello():
 @app.route("/studies")
 def studies():
     return public_api.get_studies
+
+@app.route("/user")
+def user():
+    return user_api.get_user
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ import axios from 'axios';
 
 Vue.use(Vuex);
 
-const URL = 'http://localhost:5000/studies'
+const URL = 'http://localhost:5000'
 
 export default new Vuex.Store({
     state: {
@@ -22,13 +22,33 @@ export default new Vuex.Store({
         updateStudies(state, studies) {
             state.studies = studies
         },
+        updateEnrollments(state, enrollments) {
+            state.enrollments = enrollments
+        }
     },
     actions: {
         loadStudies({commit}) {
-            axios.get(URL).then((response) => {
-                console.log(response.data, this)
+            axios.get(URL + '/studies').then((response) => {
                 commit('updateStudies', response.data)
             })
+        },
+        loadEnrollments({commit}) {
+            axios.post(URL + '/enrollments').then((response) => {
+                commit('updateEnrollments', response.data)
+            })
+        },
+        addEnrollment({dispatch}, user_id, study_id) {
+            payload = {user_id: user_id, study_id: study_id}
+            axios.post(URL + '/enrollments', payload).then((response) => {
+                dispatch('loadEnrollments')
+            })
+        },
+        deleteEnrollment({dispatch}, user_id, study_id) {
+            data = {user_id: user_id, study_id: study_id}
+            axios.delete(URL + 'enrollments', {data: data}).then((response) => {
+                dispatch('loadEnrollments')
+            })
         }
+
     },
 });

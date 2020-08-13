@@ -17,20 +17,38 @@
                                 My Studies
                             </h2>
                         </div>
-                    </section>
-                    <div v-for="item in $store.getters.studies" :key="item.created_at" class="relative">
                         <div class="flex mb-2">
-                          <div v-if="$store.getters.enrollments[item.id]">
-                            {{ item.title }}
-                            Enrolled
-                            <button>Leave study</button>
-                          </div>
-                          <div v-else>
-                            {{ item.title }}
-                            Not Enrolled
-                            <button>Join Study</button>
-                          </div>
+                          <table>
+                          <thead>
+                            <tr>
+                              <th>Study</th>
+                              <th>Status</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="item in $store.getters.studies" :key="item.created_at" class="text-sano-burgundy" style="border-bottom: solid #ddd">
+                              <td>{{ item.title }}</td>
+                              <td v-if="$store.getters.enrollments[item.id]">
+                                Enrolled
+                              </td>
+                              <td v-else>Not Enrolled</td>
+                              <td v-if="$store.getters.enrollments[item.id]">
+                                <button style="padding: 10px" @click=>
+                                  Leave study
+                                </button>
+                              </td>
+                              <td v-else>
+                                <button style="padding: 10px">
+                                  Join Study
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                          </table>
                         </div>
+                    </section>
+
                     </div>
                 </div>
                 </div>
