@@ -54,12 +54,8 @@ def enrollments(user_id, user_email):
         del result['user']
     elif method == 'DELETE':
         study_id = request.args.get('study_id')
-        query = (Enrollments
-                     .delete()
-                     .where(
-                         Enrollments.study_id == study_id and
-                         Enrollments.user_id == user_id))
-        result = query.execute()
+        to_del = Enrollments.get(Enrollments.study_id == study_id and Enrollments.user_id   == user_id)
+        result = to_del.delete_instance()
 
     response = jsonify(result) if result != '' else ''
     return response

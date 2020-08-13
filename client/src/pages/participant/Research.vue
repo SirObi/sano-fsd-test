@@ -29,17 +29,17 @@
                           <tbody>
                             <tr v-for="item in $store.getters.studies" :key="item.created_at" class="text-sano-burgundy" style="border-bottom: solid #ddd">
                               <td>{{ item.title }}</td>
-                              <td v-if="$store.getters.enrollments[item.id]">
+                              <td v-if="$store.getters.enrollments.includes(item.id)">
                                 Enrolled
                               </td>
                               <td v-else>Not Enrolled</td>
-                              <td v-if="$store.getters.enrollments[item.id]">
-                                <button style="padding: 10px" @click=>
+                              <td v-if="$store.getters.enrollments.includes(item.id)">
+                                <button style="padding: 10px" @click="$store.dispatch('deleteEnrollment', item.id)">
                                   Leave study
                                 </button>
                               </td>
                               <td v-else>
-                                <button style="padding: 10px">
+                                <button style="padding: 10px" @click="$store.dispatch('addEnrollment', item.id)">
                                   Join Study
                                 </button>
                               </td>
@@ -70,6 +70,7 @@ export default {
     },
     created() {
       this.$store.dispatch('loadStudies');
+      this.$store.dispatch('loadEnrollments');
     },
 };
 </script>

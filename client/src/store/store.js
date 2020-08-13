@@ -23,7 +23,8 @@ export default new Vuex.Store({
             state.studies = studies
         },
         updateEnrollments(state, enrollments) {
-            state.enrollments = enrollments
+          state.enrollments = enrollments
+          console.log(state.enrollments)
         }
     },
     actions: {
@@ -33,19 +34,29 @@ export default new Vuex.Store({
             })
         },
         loadEnrollments({commit}) {
-            axios.post(URL + '/enrollments').then((response) => {
-                commit('updateEnrollments', response.data)
+            let config = {
+                headers: {'Authorization': `OAuth ${localStorage.getItem('authToken')}`}
+            }
+
+            axios.get(URL + '/enrollments', config).then((response) => {
+                commit('updateEnrollments', response.data.map(ent => ent.study))
             })
         },
-        addEnrollment({dispatch}, user_id, study_id) {
-            payload = {user_id: user_id, study_id: study_id}
-            axios.post(URL + '/enrollments', payload).then((response) => {
+        addEnrollment({dispatch}, study_id) {
+            let config = {
+                headers: {'Authorization': `OAuth ${localStorage.getItem('authToken')}`}
+            }
+            const payload = {study_id: study_id}
+            axios.post(URL + '/enrollments', payload, config).then((response) => {
                 dispatch('loadEnrollments')
             })
         },
-        deleteEnrollment({dispatch}, user_id, study_id) {
-            data = {user_id: user_id, study_id: study_id}
-            axios.delete(URL + 'enrollments', {data: data}).then((response) => {
+        deleteEnrollment({dispatch}, study_id) {
+            let config = {
+                headers: {'Authorization': `OAuth ${localStorage.getItem('authToken')}`}
+            }
+
+            axios.delete(URL + `/enrollments?study_id=${study_id}`, config).then((response) => {
                 dispatch('loadEnrollments')
             })
         }
